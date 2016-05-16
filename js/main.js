@@ -65,14 +65,23 @@
 
       if (thisType == 'all') {
       $scope.showSet = todoSet;
+      document.getElementById("allBtn").style.border = '1px solid #cc9a9a';
+      document.getElementById("activeBtn").style.border = '1px solid #fff';
+      document.getElementById("completeBtn").style.border = '1px solid #fff';
       }
 
       if (thisType == 'active') {
          $scope.showSet = activeSet;
+         document.getElementById("allBtn").style.border = '1px solid #fff';
+         document.getElementById("activeBtn").style.border = '1px solid #cc9a9a';
+         document.getElementById("completeBtn").style.border = '1px solid #fff';
       }
 
       if (thisType == 'complete') {
          $scope.showSet = completedSet;
+         document.getElementById("allBtn").style.border = '1px solid #fff';
+         document.getElementById("activeBtn").style.border = '1px solid #fff';
+         document.getElementById("completeBtn").style.border = '1px solid #cc9a9a';
       }
    }
 

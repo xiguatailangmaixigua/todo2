@@ -184,12 +184,6 @@
 				text-decoration: line-through;
 				color:gray;
 			}
-			.selected {
-				border: 1px solid red;
-			}
-			.unselected {
-				border: 0;
-			}
 		</style>
 	</head>
 	<body ng-app="mytodoApp"> 
@@ -226,9 +220,9 @@
 					<div class="row footer">
 						<span class="footer-left inner-btn">{{activeLen}} item left</span>
 						<span class="footer-middle"> 
-							<input class="inner-btn" ng-class="{completed:type=='all'}" type="submit" value="All" ng-click="changeListType('all')"/>
-							<input class="inner-btn" ng-class="{completed:type=='active'}" type="submit" value="Active" ng-click="changeListType('active')"/>
-							<input class="inner-btn" ng-class="{completed:type=='complete'}" type="submit" value="Completed" ng-click="changeListType('complete')"/>
+							<input class="inner-btn" id="allBtn" type="submit" value="All" ng-click="changeListType('all')"/>
+							<input class="inner-btn" id="activeBtn" type="submit" value="Active" ng-click="changeListType('active')"/>
+							<input class="inner-btn" id="completeBtn" type="submit" value="Completed" ng-click="changeListType('complete')"/>
 						</span>
 						<span class="footer-right">
 							<input class="inner-btn" type="submit" value="Clear completed" ng-click="clearComplete()"/>
