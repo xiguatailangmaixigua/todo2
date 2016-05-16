@@ -148,6 +148,7 @@
 				color: #cc9a9a;
 				transition: color 0.2s ease-out;
 				font-size: 20px;
+				visibility: hidden;
 			}
 			.btn-danger:hover {
 				color: hsla(0,117%,47%,1);
@@ -156,10 +157,14 @@
 				font-size: 14px;
 			}
 			.form-group .inner-btn {
-				background-color: #fff;
 				border: 0;
-				padding: 14px;
+				padding: 4px;
 				color: #777;
+				background-color: #fff;
+			}
+			.footer-left,.footer-right,.footer-middle {
+				margin: 12px 10px 0 12px;
+				display: inline-block;
 			}
 			.footer-left {
 				float: left;
@@ -175,9 +180,15 @@
 				text-align: center;
 				margin-top: 30px;
 			}
-			.strike{
+			.strike {
 				text-decoration: line-through;
 				color:gray;
+			}
+			.selected {
+				border: 1px solid red;
+			}
+			.unselected {
+				border: 0;
 			}
 		</style>
 	</head>
@@ -200,24 +211,24 @@
 					</div>
 				</form>
 				<div  class="from-group" ng-repeat="todo in showSet track by $index">
-					<div class="row" id="recorde" ng-mouseenter="showBtn()" ng-mouseleave="disappearBtn()">
+					<div class="row" id="recorde" ng-mouseenter="showBtn($event)" ng-mouseleave="disappearBtn($event)">
 						<span class="btn-complete">
 							<input type="checkbox" ng-model="todo.isDone" ng-click="completeTodo(todo)" aria-label="complete">
 							</input>
 							<label></label>	
 						</span>
 						<input class="todo-content" ng-class="{strike:todo.isDone}" ng-model="todo.content"></input>
-						<button class="btn btn-danger" id="delete-recorde" ng-click="removeTodo(todo)" ng-if="show"  
+						<button class="btn btn-danger" id="delete-recorde" ng-click="removeTodo(todo)"  
 							aria-label="remove">X</button>
 					</div>
 				</div>
 				<div class="form-group" ng-if="totalLen!=0">
 					<div class="row footer">
 						<span class="footer-left inner-btn">{{activeLen}} item left</span>
-						<span> 
-							<input class="inner-btn footer-middle"type="submit" value="All" ng-click="changeListType('all')"/>
-							<input class="inner-btn" type="submit" value="Active" ng-click="changeListType('active')"/>
-							<input class="inner-btn"type="submit" value="Completed" ng-click="changeListType('complete')"/>
+						<span class="footer-middle"> 
+							<input class="inner-btn" ng-class="{completed:type=='all'}" type="submit" value="All" ng-click="changeListType('all')"/>
+							<input class="inner-btn" ng-class="{completed:type=='active'}" type="submit" value="Active" ng-click="changeListType('active')"/>
+							<input class="inner-btn" ng-class="{completed:type=='complete'}" type="submit" value="Completed" ng-click="changeListType('complete')"/>
 						</span>
 						<span class="footer-right">
 							<input class="inner-btn" type="submit" value="Clear completed" ng-click="clearComplete()"/>

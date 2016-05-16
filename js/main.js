@@ -109,13 +109,13 @@
       $scope.changeListType($scope.type);
    }
 
-   $scope.showBtn = function() {
+   $scope.showBtn = function(event) {
 
-      $scope.show =  true;
+      event.currentTarget.children[2].style.visibility='visible';
    }
 
-   $scope.disappearBtn = function() {
+   $scope.disappearBtn = function(event) {
 
-      $scope.show = false; 
+      event.currentTarget.children[2].style.visibility='hidden';
    }
  });
