@@ -205,7 +205,7 @@
 					</div>
 				</form>
 				<div  class="from-group" ng-repeat="todo in showSet track by $index">
-					<div class="row" id="recorde" ng-mouseenter="showBtn($event)" ng-mouseleave="disappearBtn($event)">
+					<div class="row" ng-mouseenter="showBtn($event)" ng-mouseleave="disappearBtn($event)">
 						<span class="btn-complete">
 							<input type="checkbox" ng-model="todo.isDone" ng-click="completeTodo(todo)" aria-label="complete">
 							</input>

@@ -10,10 +10,10 @@
    $scope.doneAll = false;
    $scope.type = 'all';
    $scope.totalLen = 0;
+   $scope.doneAll = false;
 
    $scope.addTodo = function() {
 
-      $scope.doneAll = false;
       if (!$scope.todo) {
          return;
       }
@@ -29,7 +29,7 @@
       $scope.activeLen ++;
       $scope.totalLen ++;
       $scope.changeListType($scope.type);
-   };
+   },
 
    $scope.removeTodo = function(todo) {  
    
@@ -38,7 +38,7 @@
       $scope.activeLen --;
       $scope.totalLen --;
       $scope.changeListType($scope.type);
-   };
+   },
    
    $scope.completeTodo = function(todo) {
    
@@ -57,7 +57,7 @@
       $scope.activeLen = activeSet.length;
 
       $scope.changeListType($scope.type);
-   };
+   },
 
    $scope.changeListType = function(thisType) {
 
@@ -83,7 +83,7 @@
          document.getElementById("activeBtn").style.border = '1px solid #fff';
          document.getElementById("completeBtn").style.border = '1px solid #cc9a9a';
       }
-   }
+   },
 
    $scope.clearComplete = function() {
 
@@ -96,32 +96,32 @@
       $scope.changeListType($scope.type);
 
       $scope.totalLen = todoSet.length;
-   }
+   },
 
    $scope.toggleAll = function() {
 
       if ($scope.doneAll) {
-         completedSet = todoSet;
          todoSet.forEach(function(x) {
             x.isDone = true;});
+         completedSet = todoSet;
          activeSet = [];
       }
       else {
-         activeSet = todoSet;
          todoSet.forEach(function(x) {
             x.isDone = false;
          });
+         activeSet = todoSet;
          completedSet = [];
       }
       $scope.activeLen = activeSet.length;
 
       $scope.changeListType($scope.type);
-   }
+   },
 
    $scope.showBtn = function(event) {
 
       event.currentTarget.children[2].style.visibility='visible';
-   }
+   },
 
    $scope.disappearBtn = function(event) {
 
