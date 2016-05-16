@@ -10,7 +10,6 @@
    $scope.doneAll = false;
    $scope.type = 'all';
    $scope.totalLen = 0;
-   $scope.doneAll = false;
 
    $scope.addTodo = function() {
 
@@ -21,12 +20,7 @@
          content: $scope.todo,
          isDone: false
       });
-      activeSet.push({
-         content: $scope.todo,
-         isDone: false
-      })
       $scope.todo = '';
-      $scope.activeLen ++;
       $scope.totalLen ++;
       $scope.changeListType($scope.type);
    },
@@ -34,8 +28,6 @@
    $scope.removeTodo = function(todo) {  
    
       todoSet.splice(todoSet.indexOf(todo) , 1);
-      activeSet.splice(activeSet.indexOf(todo) , 1);
-      $scope.activeLen --;
       $scope.totalLen --;
       $scope.changeListType($scope.type);
    },
@@ -45,23 +37,31 @@
       if (todoSet.indexOf(todo) != -1) {
          todoSet[todoSet.indexOf(todo)].isDone = todo.isDone;
       }
-
-      activeSet = todoSet.filter(function(x) {
-         return x.isDone == false;
-      });
-
-      completedSet = todoSet.filter(function(x){
-         return x.isDone == true;
-      });
-
-      $scope.activeLen = activeSet.length;
-
       $scope.changeListType($scope.type);
    },
+
+   $scope.syncSet = function() {
+
+      activeSet = [];
+      completedSet = [];
+
+      for (var i=0;i<todoSet.length;i++) {
+         
+         if(!todoSet[i].isDone) {
+            activeSet.push(todoSet[i]);
+         }
+         else{
+            completedSet.push(todoSet[i]);
+         }
+      }
+      $scope.activeLen = activeSet.length;
+
+   }
 
    $scope.changeListType = function(thisType) {
 
       $scope.type = thisType;
+      $scope.syncSet();
 
       if (thisType == 'all') {
       $scope.showSet = todoSet;
@@ -103,17 +103,12 @@
       if ($scope.doneAll) {
          todoSet.forEach(function(x) {
             x.isDone = true;});
-         completedSet = todoSet;
-         activeSet = [];
       }
       else {
          todoSet.forEach(function(x) {
             x.isDone = false;
          });
-         activeSet = todoSet;
-         completedSet = [];
       }
-      $scope.activeLen = activeSet.length;
 
       $scope.changeListType($scope.type);
    },
