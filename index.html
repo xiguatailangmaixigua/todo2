@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>mytodo</title>
+		<style type="text/css">
+			body {
+				background-color: #F5F5F5;
+				font: 12px/1.5 "Lantinghei SC","Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,Arial,sans-serif;
+				color: #333;
+				margin: 0;
+				padding: 0;
+			}
+			.container {
+				margin: 0 auto;
+				text-align: center;			
+			}
+			.main-box {
+				width:550px;
+				margin: 0 auto;
+				box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+			}
+			.row {
+				background-color: #fff;
+				width: 100%;
+				height: 64px;
+				box-shadow: 0 -2px 1px rgba(0,0,0,0.03);
+				position: relative;
+				overflow: hidden;
+				font-size: 24px;
+			}
+			.header-box h2{
+				font-size: 100px;
+				font-weight: 100;
+				color: rgba(175, 47, 47, 0.15);
+				text-align: center;
+			}
+			.new-todo {
+				height: 32px;
+				font-size: 24px;
+				padding: 16px 16px 16px 12px;
+				background-color: rgba(0, 0, 0, 0.003);
+				border: 0;
+				display: block;
+				margin-left: 45px;
+				width: 470px;
+				outline: none;
+			}
+			.toggle-all {
+				width: 40px;
+				height: 64px;
+				position: relative;
+				float: left;
+				margin-left: 10px;
+			}
+			.toggle-all label {
+				width: 40px;
+				height: 47px;
+				position: absolute;
+				top: 17px;
+				left: 0px;
+				background: transparent;
+				float: left;
+				overflow: hidden;
+			}
+			.toggle-all label:after{
+				content: "";
+				padding: 7px;
+				position: absolute;
+				left: 15px;
+				height: 14px;
+				border: 3px solid #e6e6e6;
+    			border-top: none;
+    			border-right: none;
+    			transform: rotate(-45deg);
+    			box-sizing: border-box;
+			}
+			.toggle-all input[type=checkbox] {
+				opacity: 0;
+				position: absolute;
+				z-index: 2;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+			}
+			.btn-complete {
+				width: 40px;
+				height: 40px;
+				position: relative;
+				float: left;
+			}
+			.btn-complete input[type=checkbox] {
+				opacity: 0;
+				position: absolute;
+				z-index: 2;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.btn-complete label {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				border: 2px solid #cacace;
+				position: absolute;
+				top: 15px;
+				left: 18px;
+			}
+			.btn-complete label:after {
+				content: '';
+		    	width: 9px;
+		   		height: 5px;
+		   		position: absolute;
+		    	top: 10px;
+		    	left: 10px;
+		    	border: 3px solid #1A9909;
+		    	border-top: none;
+		    	border-right: none;
+		    	background: transparent;
+		    	opacity: 0;
+		    	transform: rotate(-45deg);
+			}
+			.btn-complete input[type=checkbox]:checked + label:after {
+    			opacity: 1;
+			}
+			.todo-content {
+			    display: block;
+			    margin-left: 45px;
+			    line-height: 60px;
+			    text-align: left;
+			    margin-left: 64px;
+			    vertical-align: middle;
+			    font-size: 24px;
+			    width: 400px;
+			    border: 0;
+			}
+			.btn-danger {
+				width: 40px;
+				height: 40px;
+				background-color: #fff;
+				position: absolute;
+				right: 15px;
+				top: 13px;
+				border: 0px;
+				color: #cc9a9a;
+				transition: color 0.2s ease-out;
+				font-size: 20px;
+			}
+			.btn-danger:hover {
+				color: hsla(0,117%,47%,1);
+			}
+			.footer {
+				font-size: 14px;
+			}
+			.form-group .inner-btn {
+				background-color: #fff;
+				border: 0;
+				padding: 14px;
+				color: #777;
+			}
+			.footer-left {
+				float: left;
+				margin-left: 10px;
+			}
+			.footer-right {
+				float:right;
+				margin-right: 10px;
+			}
+			.info {
+				font-size: 12px;
+				color: #777;
+				text-align: center;
+				margin-top: 30px;
+			}
+			.strike{
+				text-decoration: line-through;
+				color:gray;
+			}
+		</style>
+	</head>
+	<body ng-app="mytodoApp"> 
+		<div class="container" ng-controller="MainCtrl">
+			<div class="header-box">
+				<h2>My todos</h2>
+			</div>
+			<div class="main-box">
+				<form class="input-form" ng-submit="addTodo()">
+					<div class="row">
+						<span class="toggle-all">
+							<input type="checkbox" id="selectAll" ng-model="doneAll"
+								 ng-click="toggleAll()" aria-label="comple"> 
+							</input>
+							<label for="selectAll"></label>	
+						</span>
+						<input class="new-todo" type="text" ng-model="todo" placeholder="What do you want to do today?">
+						</input>
+					</div>
+				</form>
+				<div  class="from-group" ng-repeat="todo in showSet track by $index">
+					<div class="row" id="recorde" ng-mouseenter="showBtn()" ng-mouseleave="disappearBtn()">
+						<span class="btn-complete">
+							<input type="checkbox" ng-model="todo.isDone" ng-click="completeTodo(todo)" aria-label="complete">
+							</input>
+							<label></label>	
+						</span>
+						<input class="todo-content" ng-class="{strike:todo.isDone}" ng-model="todo.content"></input>
+						<button class="btn btn-danger" id="delete-recorde" ng-click="removeTodo(todo)" ng-if="show"  
+							aria-label="remove">X</button>
+					</div>
+				</div>
+				<div class="form-group" ng-if="totalLen!=0">
+					<div class="row footer">
+						<span class="footer-left inner-btn">{{activeLen}} item left</span>
+						<span> 
+							<input class="inner-btn footer-middle"type="submit" value="All" ng-click="changeListType('all')"/>
+							<input class="inner-btn" type="submit" value="Active" ng-click="changeListType('active')"/>
+							<input class="inner-btn"type="submit" value="Completed" ng-click="changeListType('complete')"/>
+						</span>
+						<span class="footer-right">
+							<input class="inner-btn" type="submit" value="Clear completed" ng-click="clearComplete()"/>
+						</span>
+					</div>					
+				</div>
+			</div>
+			<div class="info">
+				<p>Click to edit a todo</p>
+				<p>Credits: Christoph Burgdorf, Eric Bidelman, Jacob Mumm, Igor Minar and Pascal Hartig</p> 
+				<p>Part of TodoMVC</p>			
+			</div>
+		</div>
+		<script src="js/angular.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>
